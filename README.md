@@ -8,7 +8,9 @@ A [Model Context Protocol (MCP)](https://modelcontextprotocol.io) server for the
 - **Multi-Step Browser Actions** — Click, type, submit forms, navigate pages, and wait for elements before capturing
 - **Scheduled Screenshots** — Create recurring capture configurations on minute, hour, day, week, month, or year intervals
 - **Geo-Located Captures** — Screenshot from 150+ real locations worldwide (countries, US states, and major cities)
+- **AI Analysis Screenshots** — Capture screenshots and have AI analyze the images guided by your custom text prompts
 - **Change Notifications** — Monitor pages for visual changes with Slack and webhook alerts
+- **Multiple Image AI Analysis** — Have AI compare up to 5 images and 5 prompts
 - **Domain Research** — AI-powered structured data extraction across multiple domains
 - **Full Configuration Management** — Create, read, update, delete, and list screenshot configurations programmatically
 - **OAuth 2.1 Authentication** — Secure, spec-compliant MCP auth via Streamable HTTP transport
@@ -21,8 +23,9 @@ A [Model Context Protocol (MCP)](https://modelcontextprotocol.io) server for the
 
 ### Claude.ai
 
-1. Open **Settings** (bottom-left) and navigate to **Integrations**
-2. Select **Add custom connector**
+1. Open **Settings** (bottom-left)
+2. Select **Connectors**
+3. Click **Add custom connector**
 3. Enter the server URL:
    ```
    https://mcp.pagepixels.com/mcp
@@ -47,7 +50,7 @@ For clients that support remote MCP servers with OAuth, authentication is handle
 
 | Tool | Description |
 |---|---|
-| `snap` | Capture a screenshot of any URL with full control over viewport, format, quality, wait conditions, JS/CSS injection, multi-step browser actions, and geo-location |
+| `snap` | Capture a screenshot of any URL with full control over viewport, format, quality, wait conditions, JS/CSS injection, multi-step browser actions, AI analysis, and geo-location |
 | `snap_html` | Render raw HTML content into a screenshot with the same capture options as `snap` |
 | `capture_screenshot` | Trigger an immediate capture for an existing screenshot configuration |
 
@@ -83,6 +86,12 @@ For clients that support remote MCP servers with OAuth, authentication is handle
 | `get_domain_research_status` | Check the status of a domain research job |
 | `get_domain_research_report` | Download completed research results as JSON or CSV |
 | `list_domain_research_reports` | List all domain research reports in the account |
+
+### Multiple Image AI Analysis
+
+| Tool | Description |
+|---|---|
+| `analyze_any_image_with_ai` | Submit up to 5 images and 5 prompts for an AI to analyze |
 
 ### Account & Utilities
 
@@ -124,9 +133,8 @@ The `snap` and `snap_html` tools support extensive configuration:
 - **Timing:** `wait` (ms delay before capture), `wait_for` (CSS selector to appear)
 - **Injection:** `js_inject`, `css_inject` for custom page modifications
 - **Privacy:** `no_ads`, `no_cookie_banners`, `no_tracking`
-- **Scripting:** `disable_js`, `disable_third_party_js`
-- **Geo-Location:** `real_location` (150+ locations), `latitude`/`longitude`, `time_zone`
-- **Auth & Headers:** `cookies`, `headers`, `user_agent`
+- **Geo-Location:** `real_location` (150+ locations)
+- **Custom Cookies & Headers:** `cookies`, `headers`
 - **Element Capture:** `selectors` to capture a specific DOM element
 - **HTML Extraction:** `html_only` to return fully rendered HTML instead of an image
 - **Caching:** `ttl` to control cache duration (0 for always fresh)
