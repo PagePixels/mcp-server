@@ -147,3 +147,6 @@ vite.config.ts.timestamp-*
 output.md 
 application_context.md
 breakdown.*
+
+# deployment directory
+bin
