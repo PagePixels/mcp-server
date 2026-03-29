@@ -1,6 +1,6 @@
-# pagepixels-screenshots-mcp-server
+# PagePixels Screenshots MCP Server
 
-A [Model Context Protocol (MCP)](https://modelcontextprotocol.io) server for the [PagePixels](https://pagepixels.com) Screenshot API. Enables AI assistants like Claude, Cursor, Windsurf, and other MCP-compatible clients to capture screenshots, manage screenshot configurations, monitor page changes, and perform AI-powered domain research — all through natural language.
+A [Model Context Protocol (MCP)](https://modelcontextprotocol.io) server for the [PagePixels](https://pagepixels.com) Screenshot API. Enables AI assistants to capture instant and scheduled screenshots, generate images from raw HTML, take screenshots after performing browser actions, and run AI-powered website domain research using natural language.
 
 ## Features
 
@@ -8,8 +8,11 @@ A [Model Context Protocol (MCP)](https://modelcontextprotocol.io) server for the
 - **Multi-Step Browser Actions** — Click, type, submit forms, navigate pages, and wait for elements before capturing
 - **Scheduled Screenshots** — Create recurring capture configurations on minute, hour, day, week, month, or year intervals
 - **Geo-Located Captures** — Screenshot from 150+ real locations worldwide (countries, US states, and major cities)
+- **AI Analysis Screenshots** — Capture screenshots and have AI analyze the images guided by your custom text prompts
 - **Change Notifications** — Monitor pages for visual changes with Slack and webhook alerts
-- **Domain Research** — AI-powered structured data extraction across multiple domains
+- **Multiple Image AI Analysis** — Have AI compare up to 5 images and 5 prompts
+- **Extract HTML** — Enable AI to find CSS Selectors and scrape information from web pages 
+- **Website Domain Research** — AI-powered structured data extraction across multiple domains
 - **Full Configuration Management** — Create, read, update, delete, and list screenshot configurations programmatically
 - **OAuth 2.1 Authentication** — Secure, spec-compliant MCP auth via Streamable HTTP transport
 
@@ -19,19 +22,7 @@ A [Model Context Protocol (MCP)](https://modelcontextprotocol.io) server for the
 
 ## Quick Start
 
-### Claude.ai
-
-1. Open **Settings** (bottom-left) and navigate to **Integrations**
-2. Select **Add custom connector**
-3. Enter the server URL:
-   ```
-   https://mcp.pagepixels.com/mcp
-   ```
-4. Complete the OAuth authorization when prompted in the browser
-
-Once connected, PagePixels tools will be available in all new conversations.
-
-### Cursor / Windsurf / Claude Desktop / Other MCP Clients
+### MCP Server URL
 
 Connect over Streamable HTTP by pointing your client at:
 
@@ -41,13 +32,26 @@ https://mcp.pagepixels.com/mcp
 
 For clients that support remote MCP servers with OAuth, authentication is handled via the standard MCP OAuth 2.1 flow with PKCE — authorize through the browser prompt when first connecting.
 
+### Example: Claude.ai Web 
+
+1. Open **Settings** (bottom-left)
+2. Select **Connectors**
+3. Click **Add custom connector**
+3. Enter the server URL:
+   ```
+   https://mcp.pagepixels.com/mcp
+   ```
+4. Complete the OAuth authorization when prompted in the browser
+
+Once connected, PagePixels tools will be available in all new conversations.
+
 ## Tools
 
 ### Screenshot Capture
 
 | Tool | Description |
 |---|---|
-| `snap` | Capture a screenshot of any URL with full control over viewport, format, quality, wait conditions, JS/CSS injection, multi-step browser actions, and geo-location |
+| `snap` | Capture a screenshot of any URL with full control over viewport, format, quality, wait conditions, JS/CSS injection, multi-step browser actions, AI analysis, and geo-location |
 | `snap_html` | Render raw HTML content into a screenshot with the same capture options as `snap` |
 | `capture_screenshot` | Trigger an immediate capture for an existing screenshot configuration |
 
@@ -84,6 +88,12 @@ For clients that support remote MCP servers with OAuth, authentication is handle
 | `get_domain_research_report` | Download completed research results as JSON or CSV |
 | `list_domain_research_reports` | List all domain research reports in the account |
 
+### Multiple Image AI Analysis
+
+| Tool | Description |
+|---|---|
+| `analyze_any_image_with_ai` | Submit up to 5 images and 5 prompts for an AI to analyze |
+
 ### Account & Utilities
 
 | Tool | Description |
@@ -97,16 +107,16 @@ For clients that support remote MCP servers with OAuth, authentication is handle
 Once connected, interact naturally with your AI assistant:
 
 **Take a screenshot:**
-> "Take a screenshot of https://example.com in PNG format at 1440px wide"
+> "Take a screenshot of https://example.com in PNG format at 540px wide and remove cookie banners"
 
 **Multi-step capture:**
 > "Go to https://example.com, click the login button, fill in the email field with test@example.com, submit the form, then take a full-page screenshot"
 
 **Scheduled monitoring:**
-> "Create a screenshot configuration for https://example.com/pricing that captures every 6 hours as JPEG"
+> "Create a screenshot configuration for https://example.com/pricing that captures every 6 hours"
 
 **Geo-located capture:**
-> "Screenshot https://example.com from Japan with a Retina scale factor"
+> "Screenshot https://example.com from Japan and wait 6000ms before taking the screenshot"
 
 **Domain research:**
 > "Research these 5 competitor domains and extract their pricing tiers, founding year, and team size"
@@ -124,12 +134,13 @@ The `snap` and `snap_html` tools support extensive configuration:
 - **Timing:** `wait` (ms delay before capture), `wait_for` (CSS selector to appear)
 - **Injection:** `js_inject`, `css_inject` for custom page modifications
 - **Privacy:** `no_ads`, `no_cookie_banners`, `no_tracking`
-- **Scripting:** `disable_js`, `disable_third_party_js`
-- **Geo-Location:** `real_location` (150+ locations), `latitude`/`longitude`, `time_zone`
-- **Auth & Headers:** `cookies`, `headers`, `user_agent`
+- **Geo-Location:** `real_location` (150+ locations)
+- **Custom Cookies & Headers:** `cookies`, `headers`
 - **Element Capture:** `selectors` to capture a specific DOM element
 - **HTML Extraction:** `html_only` to return fully rendered HTML instead of an image
 - **Caching:** `ttl` to control cache duration (0 for always fresh)
+
+[See full list of screenshot options](https://pagepixels.com/app/screenshots-api-documentation#api-options).
 
 ## Multi-Step Actions
 

@@ -269,6 +269,8 @@ const sharedScreenshotOptionsSchema = z.object({
   js_inject: z.string().optional().describe('Inject custom JavaScript into the page.'),
   multi_step_actions: z.array(multiStepActionSchema).optional().describe('Multi-step browser actions to run before the screenshot.'),
   real_location: z.enum(REAL_LOCATIONS).optional().describe('Capture from a supported city, country, or US state.'),
+  analyze_image_with_ai: z.boolean().optional().describe('Enables AI image analysis. When set to true, an AI processes the screenshot image and provide insights based on the provided ai_prompt.'),
+  ai_prompt: z.string().optional().describe('A custom text prompt that guides the AI in analyzing the screenshot image.'),
   headers: z.array(keyValueSchema).optional().describe('Additional HTTP headers.'),
   cookies: z.array(keyValueSchema).optional().describe('Custom cookies.'),
   accept_language: z.string().optional().describe('Preferred language for localized pages.'),
@@ -889,6 +891,33 @@ const createMcpServer = () => {
         method: 'GET',
         path: '/api/domain_research_requests',
         query: args
+      });
+
+      return {
+        content: [{ type: 'text', text: JSON.stringify(result, null, 2) }],
+        structuredContent: result
+      };
+    }
+  );
+
+  mcpServer.registerTool(
+    'analyze_any_image_with_ai',
+    {
+      description: 'Run AI Analysis on up to 5 images and 5 custom prompts.',
+      annotations: { readOnlyHint: false, destructiveHint: false },
+      inputSchema: z.object({
+        urls: z.array(z.string()).min(1).describe('Array of image URLs to be analyzed. Each image URL can be a direct link to a PNG, JPEG, WEBP, or GIF image file no larger than 20MB.'),
+        prompts: z.array(z.string()).min(1).describe('Corresponding array of AI prompts. Prompts can reference any image and each prompt can be up to 2500 characters in length.'),
+      })
+    },
+    async (
+      args: Record<string, unknown>,
+      extra: RequestHandlerExtra<ServerRequest, ServerNotification>
+    ) => {
+      const result = await requestApi(extra, {
+        method: 'POST',
+        path: '/ai/analyze',
+        body: args
       });
 
       return {
