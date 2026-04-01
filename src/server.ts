@@ -378,7 +378,7 @@ const createMcpServer = () => {
       annotations: { readOnlyHint: true, destructiveHint: false },
       inputSchema: sharedScreenshotOptionsSchema.extend({
         url: z.string().url().describe('The URL to capture (e.g., https://wikipedia.com).'),
-        json: z.boolean().optional().describe('When true, returns JSON instead of raw image.'),
+        json: z.boolean().optional(),
         ttl: z.number().int().optional().describe('Cache duration in seconds (default 86400). Use 0 to always capture fresh.')
       })
     },
@@ -414,7 +414,7 @@ const createMcpServer = () => {
         .omit({ html_only: true })
         .extend({
           html_content: z.string().describe('The HTML content to render.'),
-          json: z.boolean().optional().describe('When true, returns JSON instead of raw image.')
+          json: z.boolean().optional()
         })
     },
     async (
