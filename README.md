@@ -7,11 +7,11 @@ A [Model Context Protocol (MCP)](https://modelcontextprotocol.io) server for the
 - **Instant Screenshots** — Capture any URL or render raw HTML to an image on demand
 - **Multi-Step Browser Actions** — Click, type, submit forms, navigate pages, and wait for elements before capturing
 - **Scheduled Screenshots** — Create recurring capture configurations on minute, hour, day, week, month, or year intervals
-- **Geo-Located Captures** — Screenshot from 150+ real locations worldwide (countries, US states, and major cities)
-- **AI Analysis Screenshots** — Capture screenshots and have AI analyze the images guided by your custom text prompts
-- **Change Notifications** — Monitor pages for visual changes with Slack and webhook alerts
+- **Real Location Screenshots** — Screenshot from 150+ geographical locations (countries, US states, and major cities)
+- **AI Analysis Screenshots** — Capture screenshots and have AI analyze the images guided by custom text prompts
+- **Custom HTML Screenshots** — Create screenshot from HTML and data available in the MCP client
 - **Multiple Image AI Analysis** — Have AI compare up to 5 images and 5 prompts
-- **Extract HTML** — Enable AI to find CSS Selectors and scrape information from web pages 
+- **Extract HTML** — Enable AI to find CSS Selectors and get HTML content from websites that generate their HTML using JavaScript 
 - **Website Domain Research** — AI-powered structured data extraction across multiple domains
 - **Full Configuration Management** — Create, read, update, delete, and list screenshot configurations programmatically
 - **OAuth 2.1 Authentication** — Secure, spec-compliant MCP auth via Streamable HTTP transport
@@ -135,6 +135,7 @@ The `snap` and `snap_html` tools support extensive configuration:
 - **Injection:** `js_inject`, `css_inject` for custom page modifications
 - **Privacy:** `no_ads`, `no_cookie_banners`, `no_tracking`
 - **Geo-Location:** `real_location` (150+ locations)
+- **AI Analysis:** `analyze_image_with_ai` and `ai_prompt` to analyze a screenshot guided by a custom text prompt
 - **Custom Cookies & Headers:** `cookies`, `headers`
 - **Element Capture:** `selectors` to capture a specific DOM element
 - **HTML Extraction:** `html_only` to return fully rendered HTML instead of an image
