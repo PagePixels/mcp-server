@@ -9,7 +9,7 @@ A [Model Context Protocol (MCP)](https://modelcontextprotocol.io) server for the
 - **Scheduled Screenshots** — Create recurring capture configurations on minute, hour, day, week, month, or year intervals
 - **Real Location Screenshots** — Screenshot from 150+ geographical locations (countries, US states, and major cities)
 - **AI Analysis Screenshots** — Capture screenshots and have AI analyze the images guided by custom text prompts
-- **Custom HTML Screenshots** — Create screenshot from HTML and data available in the MCP client
+- **Custom HTML Screenshots** — Create screenshots from HTML and data available in the MCP client
 - **Multiple Image AI Analysis** — Have AI compare up to 5 images and 5 prompts
 - **Extract HTML** — Enable AI to find CSS Selectors and get HTML content from websites that generate their HTML using JavaScript 
 - **Website Domain Research** — AI-powered structured data extraction across multiple domains
