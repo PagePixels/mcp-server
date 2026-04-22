@@ -17,7 +17,8 @@ export function protectedResourceMetadata(): Router {
   const router = Router();
 
   router.get('/.well-known/oauth-protected-resource', (_req, res) => {
-    const resource = normalizedUrl(process.env.MCP_SERVER_URL, DEFAULT_MCP_SERVER_URL);
+    const serverBase = normalizedUrl(process.env.MCP_SERVER_URL, DEFAULT_MCP_SERVER_URL);
+    const resource = `${serverBase}/mcp`;
     const authorizationServer = normalizedUrl(
       process.env.RAILS_ISSUER_URL,
       DEFAULT_RAILS_ISSUER_URL
