@@ -24,6 +24,7 @@ export function protectedResourceMetadata(): Router {
       DEFAULT_RAILS_ISSUER_URL
     );
 
+    res.set('Cache-Control', 'no-store');
     res.json({
       resource,
       authorization_servers: [authorizationServer],
@@ -35,8 +36,9 @@ export function protectedResourceMetadata(): Router {
   router.get('/.well-known/oauth-authorization-server', (_req, res) => {
     const issuer = normalizedUrl(process.env.RAILS_ISSUER_URL, DEFAULT_RAILS_ISSUER_URL);
 
+    res.set('Cache-Control', 'no-store');
     res.json({
-      issuer,
+      issuer: DEFAULT_MCP_SERVER_URL,
       authorization_endpoint: `${issuer}/oauth/authorize`,
       token_endpoint: `${issuer}/oauth/token`,
       registration_endpoint: `${issuer}/oauth/register`,
