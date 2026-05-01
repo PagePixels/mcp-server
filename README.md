@@ -99,7 +99,7 @@ Once connected, PagePixels tools will be available in all new conversations.
 | `list_config_change_notifications` | List change notifications for a specific configuration. |
 | `list_all_change_notifications` | List all change notifications across the account. |
 
-### Account & Utilities
+### Account
 
 | Tool | Description |
 |---|---|
