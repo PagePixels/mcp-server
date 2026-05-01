@@ -30,77 +30,80 @@ Connect over Streamable HTTP by pointing your client at:
 https://mcp.pagepixels.com/mcp
 ```
 
-For clients that support remote MCP servers with OAuth, authentication is handled via the standard MCP OAuth 2.1 flow with PKCE — authorize through the browser prompt when first connecting.
-
 ### Example: Claude.ai Web 
 
-1. Open **Settings** (bottom-left)
-2. Select **Connectors**
-3. Click **Add custom connector**
+1. Open **Customize** (toolbox icon).
+2. Select **Connectors**.
+3. Click **Add**. Select **Add custom connector** option.
 3. Enter the server URL:
    ```
    https://mcp.pagepixels.com/mcp
    ```
-4. Complete the OAuth authorization when prompted in the browser
+4. Complete the OAuth authorization when prompted in the browser.
 
 Once connected, PagePixels tools will be available in all new conversations.
 
 ## Tools
 
-### Screenshot Capture
+### Capture Instant Screenshots
 
 | Tool | Description |
 |---|---|
-| `snap` | Capture a screenshot of any URL with full control over viewport, format, quality, wait conditions, JS/CSS injection, multi-step browser actions, AI analysis, and geo-location |
-| `snap_html` | Render raw HTML content into a screenshot with the same capture options as `snap` |
-| `capture_screenshot` | Trigger an immediate capture for an existing screenshot configuration |
+| `snap` | Capture a screenshot of any URL with full control over viewport, format, quality, wait conditions, JS/CSS injection, multi-step browser actions, AI analysis, and geo-location. |
+| `snap_html` | Render raw HTML content into a screenshot with the same capture options as the `snap` tool. |
+| `capture_screenshot` | Trigger an immediate capture for an existing screenshot configuration. |
 
-### Screenshot Configuration Management
+### Scheduled Screenshots
 
 | Tool | Description |
 |---|---|
-| `create_screenshot_config` | Create a new configuration with optional scheduling (minutes through years) |
-| `get_screenshot_config` | Retrieve a configuration by ID |
-| `update_screenshot_config` | Update any property of an existing configuration |
-| `delete_screenshot_config` | Delete a configuration and all its captured screenshots |
-| `list_screenshot_configs` | List all configurations in the account with pagination and time filters |
+| `create_screenshot_config` | Create a new screenshot configuration with optional interval scheduling (minutes, hours, days, months years). |
+| `get_screenshot_config` | Retrieve a screenshot configuration by ID. |
+| `update_screenshot_config` | Update any property of an existing screenshot configuration. |
+| `delete_screenshot_config` | Delete a screenshot configuration and all its captured screenshots. |
+| `list_screenshot_configs` | List all screenshot configurations in the account with pagination and time filters. |
+| `get_job_status` | Check if a screenshot job has completed. |
 
 ### Screenshot History
 
 | Tool | Description |
 |---|---|
-| `list_config_screenshots` | List all screenshots for a specific configuration |
-| `list_all_screenshots` | List all screenshots across the account |
+| `list_config_screenshots` | List all screenshots for a specific configuration. |
+| `list_all_screenshots` | List all screenshots across the account. |
 
-### Change Notifications
-
-| Tool | Description |
-|---|---|
-| `list_config_change_notifications` | List change notifications for a specific configuration |
-| `list_all_change_notifications` | List all change notifications across the account |
-
-### Domain Research
+### Real Locations
 
 | Tool | Description |
 |---|---|
-| `create_domain_research` | Submit an AI-powered data extraction job across one or more domains with custom field definitions |
-| `get_domain_research_status` | Check the status of a domain research job |
-| `get_domain_research_report` | Download completed research results as JSON or CSV |
-| `list_domain_research_reports` | List all domain research reports in the account |
+| `list_real_locations` | List all 150+ supported geo-locations for screenshot capture. |
 
 ### Multiple Image AI Analysis
 
 | Tool | Description |
 |---|---|
-| `analyze_any_image_with_ai` | Submit up to 5 images and 5 prompts for an AI to analyze |
+| `analyze_any_image_with_ai` | Submit up to 5 images and 5 prompts for an AI to analyze. |
+
+### Website Domain Research
+
+| Tool | Description |
+|---|---|
+| `create_domain_research` | Submit an AI-powered data extraction job across one or more domains with custom field definitions. |
+| `get_domain_research_status` | Check the status of a domain research job. |
+| `get_domain_research_report` | Download completed research results as JSON or CSV. |
+| `list_domain_research_reports` | List all domain research reports in the account. |
+
+### Change Notifications
+
+| Tool | Description |
+|---|---|
+| `list_config_change_notifications` | List change notifications for a specific configuration. |
+| `list_all_change_notifications` | List all change notifications across the account. |
 
 ### Account & Utilities
 
 | Tool | Description |
 |---|---|
-| `get_account_limits` | Get current usage and account limits |
-| `get_job_status` | Check if a screenshot job has completed |
-| `list_real_locations` | List all 150+ supported geo-locations for screenshot capture |
+| `get_account_limits` | Get current usage and account limits. |
 
 ## Usage Examples
 
@@ -110,10 +113,10 @@ Once connected, interact naturally with your AI assistant:
 > "Take a screenshot of https://example.com in PNG format at 540px wide and remove cookie banners"
 
 **Multi-step capture:**
-> "Go to https://example.com, click the login button, fill in the email field with test@example.com, submit the form, then take a full-page screenshot"
+> "Go to https://example.com, fill in the search field with 'text to search for', submit the form, then take a full-page screenshot"
 
 **Scheduled monitoring:**
-> "Create a screenshot configuration for https://example.com/pricing that captures every 6 hours"
+> "Capture a screenshot of https://example.com/pricing every 6 hours"
 
 **Geo-located capture:**
 > "Screenshot https://example.com from Japan and wait 6000ms before taking the screenshot"
@@ -129,15 +132,16 @@ Once connected, interact naturally with your AI assistant:
 The `snap` and `snap_html` tools support extensive configuration:
 
 - **Viewport:** `page_width`, `page_height`, `scale_factor` (1x or 2x Retina)
-- **Output:** `image_format` (jpeg, png, webp), `quality` (1–100 for JPEG), thumbnails
+- **Output:** `image_format` (jpeg, png, webp, pdf), `quality` (1–100 for JPEG), thumbnails
 - **Full Page:** `fullpage`, `fullpage_advanced`, `incremental_scroll` for lazy-loaded content
+- **Element Capture:** `selectors` to screenshot a specific DOM element
 - **Timing:** `wait` (ms delay before capture), `wait_for` (CSS selector to appear)
-- **Injection:** `js_inject`, `css_inject` for custom page modifications
-- **Privacy:** `no_ads`, `no_cookie_banners`, `no_tracking`
-- **Geo-Location:** `real_location` (150+ locations)
+- **Custom Styles:** `css_inject`
+- **Scripting:** `js_inject`
+- **Remove/disable:** `no_ads`, `no_cookie_banners`, `no_tracking`
+- **Geo-Location:** `real_location` (150+ locations), `time_zone`, `accept_language`
 - **AI Analysis:** `analyze_image_with_ai` and `ai_prompt` to analyze a screenshot guided by a custom text prompt
-- **Custom Cookies & Headers:** `cookies`, `headers`
-- **Element Capture:** `selectors` to capture a specific DOM element
+- **Auth & headers:** `cookies`, `headers`, `user_agent`
 - **HTML Extraction:** `html_only` to return fully rendered HTML instead of an image
 - **Caching:** `ttl` to control cache duration (0 for always fresh)
 
@@ -149,19 +153,22 @@ Automate browser interactions before capturing with `multi_step_actions`:
 
 ```json
 [
-  { "type": "click", "selector": "#login-btn" },
+  { "type": "wait_for_selector", "selector": "#email" }
   { "type": "text_field", "selector": "#email", "value": "user@example.com" },
   { "type": "text_field", "selector": "#password", "value": "secret" },
   { "type": "submit" },
-  { "type": "wait_for_selector", "selector": ".dashboard" }
+  { "type": "wait", "value": "8000" },
+  { "type": "click", "selector": ".chart-filter" }
 ]
 ```
 
 Supported action types: `click`, `hover`, `change`, `redirect`, `javascript`, `evaluateJs`, `css`, `text_field`, `select`, `checkbox`, `submit`, `wait`, `wait_for_selector`
 
+[See Multi-Step section of MCP Help Guide](https://pagepixels.com/help/mcp#multi-step-actions)
+
 ## Authentication
 
-Authentication is handled through the standard MCP OAuth 2.1 flow with PKCE. When connecting through Claude.ai, Cursor, or other OAuth-capable MCP clients, authorize through the browser prompt when first connecting. No manual API key configuration is needed.
+Authentication is handled through the standard MCP OAuth 2.1 flow with PKCE and uses DCR (Dynamic Client Registration). When connecting through Claude.ai, Cursor, or other OAuth-capable MCP clients, authorize through the browser prompt when first connecting. No manual API key configuration is needed.
 
 For programmatic access outside of MCP, see the [PagePixels API documentation](https://pagepixels.com/app/documentation).
 
@@ -175,13 +182,21 @@ https://mcp.pagepixels.com/mcp
 
 All MCP clients that support remote Streamable HTTP servers can connect directly. OAuth 2.1 with PKCE is enforced on all connections.
 
-## Related
+## Resources
 
+- [Screenshot MCP Server Help Guide](https://pagepixels.com/help/mcp) — Guide to using the PagePixels MCP Server
 - [PagePixels Documentation](https://pagepixels.com/app/documentation) — Full API reference
-- [screenshots-pagepixels](https://www.npmjs.com/package/screenshots-pagepixels) — Node.js API client
-- [screenshots-pagepixels (PyPI)](https://pypi.org/project/screenshots-pagepixels/) — Python API client
-- [screenshots_pagepixels (RubyGems)](https://rubygems.org/gems/screenshots_pagepixels) — Ruby API client
 - [Model Context Protocol](https://modelcontextprotocol.io) — MCP specification
+
+## Support
+
+Contact PagePixels anytime by email: 
+
+```
+support-tickets@pagepixels.com
+```
+
+Or contact us through our [Support Form](https://pagepixels.com/support).
 
 ## License
 

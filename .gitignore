@@ -154,3 +154,6 @@ breakdown.*
 
 # deployment directory
 bin
+
+# mac
+.DS_Store
