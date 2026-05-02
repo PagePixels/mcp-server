@@ -374,8 +374,9 @@ const createMcpServer = () => {
   mcpServer.registerTool(
     'snap',
     {
+      title: 'Take Web Page Screenshot',
       description: 'Generate a screenshot via PagePixels /snap (JSON response).',
-      annotations: { readOnlyHint: true, destructiveHint: false },
+      annotations: { title: 'Take Web Page Screenshot', readOnlyHint: true, destructiveHint: false },
       inputSchema: sharedScreenshotOptionsSchema.extend({
         url: z.string().url().describe('The URL to capture (e.g., https://wikipedia.com).'),
         json: z.boolean().optional(),
@@ -408,8 +409,9 @@ const createMcpServer = () => {
   mcpServer.registerTool(
     'snap_html',
     {
+      title: 'Take Custom HTML Screenshot',
       description: 'Render provided HTML into a screenshot via PagePixels /snap_html (JSON response).',
-      annotations: { readOnlyHint: true, destructiveHint: false },
+      annotations: { title: 'Take Custom HTML Screenshot', readOnlyHint: true, destructiveHint: false },
       inputSchema: sharedScreenshotOptionsSchema
         .omit({ html_only: true })
         .extend({
@@ -443,8 +445,9 @@ const createMcpServer = () => {
   mcpServer.registerTool(
     'create_screenshot_config',
     {
+      title: 'Create Screenshot Configuration',
       description: 'Create a new screenshot configuration with optional scheduling.',
-      annotations: { readOnlyHint: false, destructiveHint: false },
+      annotations: { title: 'Create Screenshot Configuration', readOnlyHint: false, destructiveHint: false },
       inputSchema: sharedScreenshotOptionsSchema.extend({
         url: z.string().url().describe('The URL to capture.'),
         scheduled_screenshot: z.boolean().optional().describe('Enable or disable scheduling.'),
@@ -472,8 +475,9 @@ const createMcpServer = () => {
   mcpServer.registerTool(
     'capture_screenshot',
     {
+      title: 'Capture Next Screenshot',
       description: 'Trigger the next screenshot for a configuration immediately.',
-      annotations: { readOnlyHint: false, destructiveHint: false },
+      annotations: { title: 'Capture Next Screenshot', readOnlyHint: false, destructiveHint: false },
       inputSchema: z.object({
         screenshot_configuration_id: z.string().describe('Screenshot configuration id.')
       })
@@ -499,8 +503,9 @@ const createMcpServer = () => {
   mcpServer.registerTool(
     'get_screenshot_config',
     {
+      title: 'Get Screenshot Configuration',
       description: 'Retrieve a screenshot configuration by id.',
-      annotations: { readOnlyHint: true, destructiveHint: false },
+      annotations: { title: 'Get Screenshot Configuration', readOnlyHint: true, destructiveHint: false },
       inputSchema: z.object({
         screenshot_configuration_id: z.string().describe('Screenshot configuration id.')
       })
@@ -525,8 +530,9 @@ const createMcpServer = () => {
   mcpServer.registerTool(
     'update_screenshot_config',
     {
+      title: 'Update Screenshot Configuration',
       description: 'Update an existing screenshot configuration.',
-      annotations: { readOnlyHint: false, destructiveHint: false },
+      annotations: { title: 'Update Screenshot Configuration', readOnlyHint: false, destructiveHint: false },
       inputSchema: sharedScreenshotOptionsSchema.extend({
         screenshot_configuration_id: z.string().describe('Screenshot configuration id.'),
         url: z.string().url().optional().describe('The URL to capture.'),
@@ -560,8 +566,9 @@ const createMcpServer = () => {
   mcpServer.registerTool(
     'get_job_status',
     {
+      title: 'Get Screenshot Job Status',
       description: 'Check if a screenshot job has completed.',
-      annotations: { readOnlyHint: true, destructiveHint: false },
+      annotations: { title: 'Get Screenshot Job Status', readOnlyHint: true, destructiveHint: false },
       inputSchema: z.object({
         job_id: z.string().describe('Screenshot job id.')
       })
@@ -586,8 +593,9 @@ const createMcpServer = () => {
   mcpServer.registerTool(
     'list_config_screenshots',
     {
+      title: 'List Screenshots From Screenshot Configuration',
       description: 'List all screenshots for a specific configuration.',
-      annotations: { readOnlyHint: true, destructiveHint: false },
+      annotations: { title: 'List Screenshots From Screenshot Configuration', readOnlyHint: true, destructiveHint: false },
       inputSchema: sharedPaginationParamsSchema.extend({
         screenshot_configuration_id: z.string().describe('Screenshot configuration id.')
       })
@@ -616,8 +624,9 @@ const createMcpServer = () => {
   mcpServer.registerTool(
     'list_screenshot_configs',
     {
+      title: 'List All Screenshot Configurations',
       description: 'List all screenshot configurations in the account.',
-      annotations: { readOnlyHint: true, destructiveHint: false },
+      annotations: { title: 'List All Screenshot Configurations', readOnlyHint: true, destructiveHint: false },
       inputSchema: sharedPaginationParamsSchema
     },
     async (
@@ -640,8 +649,9 @@ const createMcpServer = () => {
   mcpServer.registerTool(
     'delete_screenshot_config',
     {
+      title: 'Delete Screenshot Configuration',
       description: 'Delete a screenshot configuration and all captured screenshots.',
-      annotations: { readOnlyHint: false, destructiveHint: true },
+      annotations: { title: 'Delete Screenshot Configuration', readOnlyHint: false, destructiveHint: true },
       inputSchema: z.object({
         screenshot_configuration_id: z.string().describe('Screenshot configuration id.')
       })
@@ -666,8 +676,9 @@ const createMcpServer = () => {
   mcpServer.registerTool(
     'list_all_screenshots',
     {
+      title: 'List All Screenshots',
       description: 'List all screenshots captured across the account.',
-      annotations: { readOnlyHint: true, destructiveHint: false },
+      annotations: { title: 'List All Screenshots', readOnlyHint: true, destructiveHint: false },
       inputSchema: sharedPaginationParamsSchema
     },
     async (
@@ -690,8 +701,9 @@ const createMcpServer = () => {
   mcpServer.registerTool(
     'list_config_change_notifications',
     {
+      title: 'List Change Notifications From Screenshot Configuration',
       description: 'List change notifications for a specific configuration.',
-      annotations: { readOnlyHint: true, destructiveHint: false },
+      annotations: { title: 'List Change Notifications From Screenshot Configuration', readOnlyHint: true, destructiveHint: false },
       inputSchema: sharedPaginationParamsSchema.extend({
         screenshot_configuration_id: z.string().describe('Screenshot configuration id.')
       })
@@ -720,8 +732,9 @@ const createMcpServer = () => {
   mcpServer.registerTool(
     'list_all_change_notifications',
     {
+      title: 'List All Change Notifications',
       description: 'List all change notifications across the account.',
-      annotations: { readOnlyHint: true, destructiveHint: false },
+      annotations: { title: 'List All Change Notifications', readOnlyHint: true, destructiveHint: false },
       inputSchema: sharedPaginationParamsSchema
     },
     async (
@@ -744,8 +757,9 @@ const createMcpServer = () => {
   mcpServer.registerTool(
     'list_real_locations',
     {
+      title: 'List All Real Locations',
       description: 'List all supported real locations for screenshots.',
-      annotations: { readOnlyHint: true, destructiveHint: false },
+      annotations: { title: 'List All Real Locations', readOnlyHint: true, destructiveHint: false },
       inputSchema: z.object({})
     },
     async (
@@ -767,8 +781,9 @@ const createMcpServer = () => {
   mcpServer.registerTool(
     'get_account_limits',
     {
+      title: 'Get Account Limits',
       description: 'Get current usage and account limits.',
-      annotations: { readOnlyHint: true, destructiveHint: false },
+      annotations: { title: 'Get Account Limits', readOnlyHint: true, destructiveHint: false },
       inputSchema: z.object({})
     },
     async (
@@ -790,8 +805,9 @@ const createMcpServer = () => {
   mcpServer.registerTool(
     'create_domain_research',
     {
+      title: 'Create Website Domain Research Report',
       description: 'Submit a domain research request for AI-powered data extraction.',
-      annotations: { readOnlyHint: false, destructiveHint: false },
+      annotations: { title: 'Create Website Domain Research Report', readOnlyHint: false, destructiveHint: false },
       inputSchema: z.object({
         name: z.string().optional().describe('Name for the research job.'),
         additional_notes: z.string().optional().describe('Additional notes for the research job.'),
@@ -825,8 +841,9 @@ const createMcpServer = () => {
   mcpServer.registerTool(
     'get_domain_research_status',
     {
+      title: 'Get Website Domain Research Report Status',
       description: 'Get the status of a domain research job.',
-      annotations: { readOnlyHint: true, destructiveHint: false },
+      annotations: { title: 'Get Website Domain Research Report Status', readOnlyHint: true, destructiveHint: false },
       inputSchema: z.object({
         job_id: z.string().describe('Domain research job id.')
       })
@@ -851,8 +868,9 @@ const createMcpServer = () => {
   mcpServer.registerTool(
     'get_domain_research_report',
     {
+      title: 'Get Website Domain Research Report',
       description: 'Download results of a completed domain research job (JSON or CSV).',
-      annotations: { readOnlyHint: true, destructiveHint: false },
+      annotations: { title: 'Get Website Domain Research Report', readOnlyHint: true, destructiveHint: false },
       inputSchema: z.object({
         job_id: z.string().describe('Domain research job id.'),
         format: z.string().optional().describe('Use "csv" for CSV output; omit for JSON.')
@@ -879,8 +897,9 @@ const createMcpServer = () => {
   mcpServer.registerTool(
     'list_domain_research_reports',
     {
+      title: 'List All Website Domain Research Reports',
       description: 'List all domain research reports in the account.',
-      annotations: { readOnlyHint: true, destructiveHint: false },
+      annotations: { title: 'List All Website Domain Research Reports', readOnlyHint: true, destructiveHint: false },
       inputSchema: sharedPaginationParamsSchema
     },
     async (
@@ -903,10 +922,11 @@ const createMcpServer = () => {
   mcpServer.registerTool(
     'analyze_any_image_with_ai',
     {
+      title: 'Analyze Images With AI',
       description: 'Run AI Analysis on up to 5 images and 5 custom prompts.',
-      annotations: { readOnlyHint: false, destructiveHint: false },
+      annotations: { title: 'Analyze Images With AI', readOnlyHint: false, destructiveHint: false },
       inputSchema: z.object({
-        urls: z.array(z.string()).min(1).describe('Array of image URLs to be analyzed. Each image URL can be a direct link to a PNG, JPEG, WEBP, or GIF image file no larger than 20MB.'),
+        urls: z.array(z.string()).min(1).describe('Array of image URLs to be analyzed. Each image URL must be a direct link to a PNG, JPEG, WEBP, or GIF image file no larger than 8MB.'),
         prompts: z.array(z.string()).min(1).describe('Corresponding array of AI prompts. Prompts can reference any image and each prompt can be up to 2500 characters in length.'),
       })
     },
