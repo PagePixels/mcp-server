@@ -566,9 +566,9 @@ const createMcpServer = () => {
   mcpServer.registerTool(
     'get_job_status',
     {
-      title: 'Get Screenshot Job Status',
+      title: 'Check Screenshot Job Status',
       description: 'Check if a screenshot job has completed.',
-      annotations: { title: 'Get Screenshot Job Status', readOnlyHint: true, destructiveHint: false },
+      annotations: { title: 'Check Screenshot Job Status', readOnlyHint: true, destructiveHint: false },
       inputSchema: z.object({
         job_id: z.string().describe('Screenshot job id.')
       })
@@ -841,9 +841,9 @@ const createMcpServer = () => {
   mcpServer.registerTool(
     'get_domain_research_status',
     {
-      title: 'Get Website Domain Research Report Status',
+      title: 'Check Website Domain Research Report Status',
       description: 'Get the status of a domain research job.',
-      annotations: { title: 'Get Website Domain Research Report Status', readOnlyHint: true, destructiveHint: false },
+      annotations: { title: 'Check Website Domain Research Report Status', readOnlyHint: true, destructiveHint: false },
       inputSchema: z.object({
         job_id: z.string().describe('Domain research job id.')
       })
