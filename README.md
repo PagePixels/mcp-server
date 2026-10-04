@@ -1,6 +1,6 @@
 # PagePixels Screenshots MCP Server
 
-A [Model Context Protocol (MCP)](https://modelcontextprotocol.io) server for the [PagePixels](https://pagepixels.com) Screenshot API. Enables AI assistants to capture instant and scheduled screenshots, generate images from raw HTML, take screenshots after performing browser actions, and run AI-powered website domain research using natural language.
+A [Model Context Protocol (MCP)](https://modelcontextprotocol.io) server for the [PagePixels](https://pagepixels.com) Screenshot API. Enables AI assistants to capture instant and scheduled screenshots, generate images from custom HTML, take screenshots after performing browser actions, and fetch the full raw HTML from dynamic websites using natural language.
 
 ## Features
 
@@ -11,8 +11,7 @@ A [Model Context Protocol (MCP)](https://modelcontextprotocol.io) server for the
 - **AI Analysis Screenshots** — Capture screenshots and have AI analyze the images guided by custom text prompts
 - **Custom HTML Screenshots** — Create screenshots from HTML and data available in the MCP client
 - **Multiple Image AI Analysis** — Have AI compare up to 5 images and 5 prompts
-- **Extract HTML** — Enable AI to find CSS Selectors and get HTML content from websites that generate their HTML using JavaScript 
-- **Website Domain Research** — AI-powered structured data extraction across multiple domains
+- **Extract HTML** — Enable AI to get HTML content from dynamic websites that generate their HTML using JavaScript and find CSS Selectors
 - **Full Configuration Management** — Create, read, update, delete, and list screenshot configurations programmatically
 - **OAuth 2.1 Authentication** — Secure, spec-compliant MCP auth via Streamable HTTP transport
 
@@ -83,15 +82,6 @@ Once connected, PagePixels tools will be available in all new conversations.
 |---|---|
 | `analyze_any_image_with_ai` | Submit up to 5 images and 5 prompts for an AI to analyze. |
 
-### Website Domain Research
-
-| Tool | Description |
-|---|---|
-| `create_domain_research` | Submit an AI-powered data extraction job across one or more domains with custom field definitions. |
-| `get_domain_research_status` | Check the status of a domain research job. |
-| `get_domain_research_report` | Download completed research results as JSON or CSV. |
-| `list_domain_research_reports` | List all domain research reports in the account. |
-
 ### Change Notifications
 
 | Tool | Description |
@@ -120,9 +110,6 @@ Once connected, interact naturally with your AI assistant:
 
 **Geo-located capture:**
 > "Screenshot https://example.com from Japan and wait 6000ms before taking the screenshot"
-
-**Domain research:**
-> "Research these 5 competitor domains and extract their pricing tiers, founding year, and team size"
 
 **Account overview:**
 > "Show me my current usage and remaining credits"
@@ -168,7 +155,7 @@ Supported action types: `click`, `hover`, `change`, `redirect`, `javascript`, `e
 
 ## Authentication
 
-Authentication is handled through the standard MCP OAuth 2.1 flow with PKCE and uses DCR (Dynamic Client Registration). When connecting through Claude.ai, Cursor, or other OAuth-capable MCP clients, authorize through the browser prompt when first connecting. No manual API key configuration is needed.
+Authentication is handled through the standard MCP OAuth 2.1 flow with PKCE and uses DCR (Dynamic Client Registration). When connecting through Claude.ai, ChatGPT, VS Code, or other OAuth-capable MCP clients, authorize through the browser prompt when first connecting. No manual API key configuration is needed.
 
 For programmatic access outside of MCP, see the [PagePixels API documentation](https://pagepixels.com/app/documentation).
 
