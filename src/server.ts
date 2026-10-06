@@ -443,6 +443,42 @@ const createMcpServer = () => {
   );
 
   mcpServer.registerTool(
+    'extract_html',
+    {
+      title: 'Extract HTML from a Web Page URL',
+      description: 'Extracts the fully rendered raw HTML source code of a web page (instead of taking a screenshot) using a URL. This action is optimized for fetching HTML content from websites that dynamically generate their HTML using JavaScript.',
+      annotations: { title: 'Extract HTML from a Web Page URL', readOnlyHint: true, destructiveHint: false },
+      inputSchema: sharedScreenshotOptionsSchema.extend({
+        url: z.string().url().describe('The web page to pull HTML content (e.g., https://wikipedia.com).'),
+        json: z.boolean().optional(),
+        ttl: z.number().int().optional().describe('Cache duration in seconds (default 86400). Use 0 to always capture fresh.')
+      })
+    },
+    async (
+      args: Record<string, unknown>,
+      extra: RequestHandlerExtra<ServerRequest, ServerNotification>
+    ) => {
+      const payload = {
+        json: true,
+        mcp: true,
+        html_only: true,
+        ...args
+      };
+
+      const result = await requestApi(extra, {
+        method: 'POST',
+        path: '/snap',
+        body: payload
+      });
+
+      return {
+        content: [{ type: 'text', text: JSON.stringify(result, null, 2) }],
+        structuredContent: result
+      };
+    }
+  );
+
+  mcpServer.registerTool(
     'create_screenshot_config',
     {
       title: 'Create Screenshot Configuration',
