@@ -443,6 +443,42 @@ const createMcpServer = () => {
   );
 
   mcpServer.registerTool(
+    'extract_html',
+    {
+      title: 'Extract HTML from Web Page URL',
+      description: 'Fetches the fully rendered HTML source of a web page by URL, after JavaScript has run, so it works on dynamic and single-page sites. Can perform page actions first (such as clicking, typing, or waiting) to reach the content you need before extracting it. Use this when you need the markup or text content of the page (for scraping, inspecting structure, or finding elements/links). To get a visual image of the page, use the screenshot tool instead. Results are cached for 24 hours by default; set ttl to 0 for fresh content.',
+      annotations: { title: 'Extract HTML from a Web Page URL', readOnlyHint: true, destructiveHint: false },
+      inputSchema: sharedScreenshotOptionsSchema.extend({
+        url: z.string().url().describe('The web page to pull HTML content (e.g., https://wikipedia.com).'),
+        json: z.boolean().optional(),
+        ttl: z.number().int().optional().describe('Cache duration in seconds (default 86400). Use 0 to always capture fresh.')
+      })
+    },
+    async (
+      args: Record<string, unknown>,
+      extra: RequestHandlerExtra<ServerRequest, ServerNotification>
+    ) => {
+      const payload = {
+        json: true,
+        mcp: true,
+        html_only: true,
+        ...args
+      };
+
+      const result = await requestApi(extra, {
+        method: 'POST',
+        path: '/snap',
+        body: payload
+      });
+
+      return {
+        content: [{ type: 'text', text: JSON.stringify(result, null, 2) }],
+        structuredContent: result
+      };
+    }
+  );
+
+  mcpServer.registerTool(
     'create_screenshot_config',
     {
       title: 'Create Screenshot Configuration',
