@@ -82,6 +82,12 @@ Once connected, PagePixels tools will be available in all new conversations.
 |---|---|
 | `analyze_any_image_with_ai` | Submit up to 5 images and 5 prompts for an AI to analyze. |
 
+### Extract HTML
+
+| Tool | Description |
+|---|---|
+| `extract_html` | Fetch raw HTML content from a URL. Useful for dynamically loaded websites. |
+
 ### Change Notifications
 
 | Tool | Description |
@@ -111,8 +117,11 @@ Once connected, interact naturally with your AI assistant:
 **Geo-located capture:**
 > "Screenshot https://example.com from Japan and wait 6000ms before taking the screenshot"
 
+**Fetch HTML content:**
+> "Extract the HTML content from https://example.com with PagePixels and check for spelling and grammatical errors"
+
 **Account overview:**
-> "Show me my current usage and remaining credits"
+> "Show me my current usage and remaining credits for PagePixels"
 
 ## Capture Options
 
@@ -129,7 +138,6 @@ The `snap` and `snap_html` tools support extensive configuration:
 - **Geo-Location:** `real_location` (150+ locations), `time_zone`, `accept_language`
 - **AI Analysis:** `analyze_image_with_ai` and `ai_prompt` to analyze a screenshot guided by a custom text prompt
 - **Auth & headers:** `cookies`, `headers`, `user_agent`
-- **HTML Extraction:** `html_only` to return fully rendered HTML instead of an image
 - **Caching:** `ttl` to control cache duration (0 for always fresh)
 
 [See full list of screenshot options](https://pagepixels.com/app/screenshots-api-documentation#api-options).
