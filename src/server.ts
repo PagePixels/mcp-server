@@ -202,7 +202,6 @@ const REAL_LOCATIONS = [
   'UAE',
   'Uganda',
   'Ukraine',
-  'United Kingdom',
   'Uruguay',
   'US',
   'USA',
