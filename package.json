@@ -1,6 +1,6 @@
 {
   "name": "pagepixels-screenshots-mcp-server",
-  "version": "1.0.3",
+  "version": "1.1.1",
   "mcpName": "com.pagepixels/screenshot-api",
   "description": "An MCP server for all things PagePixels Screenshots",
   "main": "index.js",
