@@ -247,6 +247,13 @@ const multiStepActionSchema = z.object({
   url: z.string().optional().describe('For change alerts: webhook URL.')
 });
 
+const aiStructuredFieldSchema = z.object({
+  name: z.string().regex(/^[A-Za-z][A-Za-z0-9_]*$/).describe('Field name, used as the key in the response. Letters, numbers, and underscores, starting with a letter.'),
+  type: z.enum(['string', 'number', 'boolean', 'enum', 'multi']).describe('Value type. "enum" returns one of options; "multi" returns an array of any of options.'),
+  description: z.string().optional().describe('Guidance on what this field should contain.'),
+  options: z.array(z.string()).max(100).optional().describe('Allowed values (max 100). Required for "enum" and "multi" types.')
+});
+
 const sharedScreenshotOptionsSchema = z.object({
   time_zone: z.string().optional().describe('ICU timezone ID (e.g., US/Eastern, Europe/Berlin, Asia/Tokyo).'),
   selectors: z.string().optional().describe('Capture only the element matching this CSS selector.'),
@@ -268,8 +275,11 @@ const sharedScreenshotOptionsSchema = z.object({
   js_inject: z.string().optional().describe('Inject custom JavaScript into the page.'),
   multi_step_actions: z.array(multiStepActionSchema).optional().describe('Multi-step browser actions to run before the screenshot.'),
   real_location: z.enum(REAL_LOCATIONS).optional().describe('Capture from a supported city, country, or US state.'),
-  analyze_image_with_ai: z.boolean().optional().describe('Enables AI image analysis. When set to true, an AI processes the screenshot image and provide insights based on the provided ai_prompt.'),
-  ai_prompt: z.string().optional().describe('A custom text prompt that guides the AI in analyzing the screenshot image.'),
+  analyze_image_with_ai: z.boolean().optional().describe('Enables AI image analysis. When set to true, an AI analyzes the screenshot image using either ai_prompt (simple mode) or ai_structured_fields (structured mode).'),
+  ai_prompt_mode: z.enum(['simple', 'structured']).optional().describe('AI analysis mode. "simple" (default) returns a free-text answer to ai_prompt in ai.ai_response. "structured" returns a JSON object in ai.ai_structured_response with the fields defined in ai_structured_fields. Use structured when you need machine-readable or repeatable values.'),
+  ai_prompt: z.string().max(2500).optional().describe('Simple mode: a custom text prompt (max 2500 characters) that guides the AI in analyzing the screenshot image.'),
+  ai_structured_fields: z.array(aiStructuredFieldSchema).max(50).optional().describe('Structured mode: the fields to extract from the screenshot (max 50). Requires ai_prompt_mode "structured".'),
+  ai_structured_instructions: z.string().optional().describe('Structured mode: optional context for the AI (e.g., "This is a product page.").'),
   headers: z.array(keyValueSchema).optional().describe('Additional HTTP headers.'),
   cookies: z.array(keyValueSchema).optional().describe('Custom cookies.'),
   accept_language: z.string().optional().describe('Preferred language for localized pages.'),
@@ -447,11 +457,19 @@ const createMcpServer = () => {
       title: 'Extract HTML from Web Page URL',
       description: 'Fetches the fully rendered HTML source of a web page by URL, after JavaScript has run, so it works on dynamic and single-page sites. Can perform page actions first (such as clicking, typing, or waiting) to reach the content you need before extracting it. Use this when you need the markup or text content of the page (for scraping, inspecting structure, or finding elements/links). To get a visual image of the page, use the screenshot tool instead. Results are cached for 24 hours by default; set ttl to 0 for fresh content.',
       annotations: { title: 'Extract HTML from a Web Page URL', readOnlyHint: true, destructiveHint: false },
-      inputSchema: sharedScreenshotOptionsSchema.extend({
-        url: z.string().url().describe('The web page to pull HTML content (e.g., https://wikipedia.com).'),
-        json: z.boolean().optional(),
-        ttl: z.number().int().optional().describe('Cache duration in seconds (default 86400). Use 0 to always capture fresh.')
-      })
+      inputSchema: sharedScreenshotOptionsSchema
+        .omit({
+          analyze_image_with_ai: true,
+          ai_prompt_mode: true,
+          ai_prompt: true,
+          ai_structured_fields: true,
+          ai_structured_instructions: true
+        })
+        .extend({
+          url: z.string().url().describe('The web page to pull HTML content (e.g., https://wikipedia.com).'),
+          json: z.boolean().optional(),
+          ttl: z.number().int().optional().describe('Cache duration in seconds (default 86400). Use 0 to always capture fresh.')
+        })
     },
     async (
       args: Record<string, unknown>,

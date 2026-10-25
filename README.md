@@ -8,7 +8,7 @@ A [Model Context Protocol (MCP)](https://modelcontextprotocol.io) server for the
 - **Multi-Step Browser Actions** — Click, type, submit forms, navigate pages, and wait for elements before capturing
 - **Scheduled Screenshots** — Create recurring capture configurations on minute, hour, day, week, month, or year intervals
 - **Real Location Screenshots** — Screenshot from 150+ geographical locations (countries, US states, and major cities)
-- **AI Analysis Screenshots** — Capture screenshots and have AI analyze the images guided by custom text prompts
+- **AI Analysis Screenshots** — Capture screenshots and have AI analyze the images, either with a custom text prompt or by extracting structured data fields into JSON
 - **Custom HTML Screenshots** — Create screenshots from HTML and data available in the MCP client
 - **Multiple Image AI Analysis** — Have AI compare up to 5 images and 5 prompts
 - **Extract HTML** — Enable AI to get HTML content from dynamic websites that generate their HTML using JavaScript and find CSS Selectors
@@ -117,6 +117,15 @@ Once connected, interact naturally with your AI assistant:
 **Geo-located capture:**
 > "Screenshot https://example.com from Japan and wait 6000ms before taking the screenshot"
 
+**AI analysis (simple prompt):**
+> "Take a screenshot of https://example.com and use AI to summarize what the page is about"
+
+**AI structured data:**
+> "Screenshot https://example.com/product and extract structured data: product_name (string), price (number), in_stock (boolean)"
+
+**Scheduled structured monitoring:**
+> "Every hour, screenshot https://example.com/status and extract a structured status field (enum: ok, degraded, down) plus a list of any visible error messages"
+
 **Fetch HTML content:**
 > "Extract the HTML content from https://example.com with PagePixels and check for spelling and grammatical errors"
 
@@ -136,7 +145,7 @@ The `snap` and `snap_html` tools support extensive configuration:
 - **Scripting:** `js_inject`
 - **Remove/disable:** `no_ads`, `no_cookie_banners`, `no_tracking`
 - **Geo-Location:** `real_location` (150+ locations), `time_zone`, `accept_language`
-- **AI Analysis:** `analyze_image_with_ai` and `ai_prompt` to analyze a screenshot guided by a custom text prompt
+- **AI Analysis:** `analyze_image_with_ai` and `ai_prompt` to analyze a screenshot guided by a custom text prompt, or `ai_prompt_mode: "structured"` with `ai_structured_fields` (and optional `ai_structured_instructions`) to extract typed fields (`string`, `number`, `boolean`, `enum`, `multi`) into a JSON object
 - **Auth & headers:** `cookies`, `headers`, `user_agent`
 - **Caching:** `ttl` to control cache duration (0 for always fresh)
 
