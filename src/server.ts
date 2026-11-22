@@ -584,11 +584,16 @@ const createMcpServer = () => {
     'update_screenshot_config',
     {
       title: 'Update Screenshot Configuration',
-      description: 'Update an existing screenshot configuration.',
+      description:
+        'Replace an existing screenshot configuration. This is a full replacement (PUT), not a partial update (PATCH): ' +
+        'any option you leave out is not kept from the current configuration. To change only some settings, call ' +
+        'get_screenshot_config first and send all its options along with your changes. url is required. To keep the ' +
+        'configuration scheduled, include scheduled_screenshot=true with its schedule; without it, the configuration ' +
+        'becomes a one-time (unscheduled) screenshot. AI options can be changed here too; the next capture uses the new settings.',
       annotations: { title: 'Update Screenshot Configuration', readOnlyHint: false, destructiveHint: false },
       inputSchema: sharedScreenshotOptionsSchema.extend({
         screenshot_configuration_id: z.string().describe('Screenshot configuration id.'),
-        url: z.string().url().optional().describe('The URL to capture.'),
+        url: z.string().url().describe('The URL to capture. Required, even if it is not changing.'),
         scheduled_screenshot: z.boolean().optional().describe('Enable or disable scheduling.'),
         scheduled_every: z.number().int().min(1).optional().describe('Frequency number (>= 1).'),
         scheduled_interval: z.enum(['minutes', 'hours', 'days', 'weeks', 'months', 'years']).optional().describe('Frequency unit.')
